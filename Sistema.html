@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SISTEMA SOLAR SANTIAGO RUGE BALLESTEROS</title>
+        <style>
+            html, body { margin: 0; padding: 0; overflow: hidden; }
+            #info {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+                color: #FFFFFF;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="info">SISTEMA SOLAR SANTIAGO RUGE BALLESTEROS<br/>
+          
+        </div>
+    <script src="js/three.min.js"></script>
+    <script>
+		var scene, aspect, camera, renderer;
+	
+		var startTime = Date.now();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+        
+        
+        var sol, mercurio, venus, tierra, luna;
+        // VARIABLES DE UBICACION PARA USAR EN TECLAS
+        
+        var thetaSum=0;
+		var positivo=false;
+        var arriba=false;
+        var abajo=false;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+		
+		init();
+		animate();
+	
+		function init(){
+			scene = new THREE.Scene();
+			aspect = window.innerWidth / window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+		    //ELEMENTOS DE ESCENA
+							  
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+			var color1 = new THREE.Color( 0xFFFFFF );
+		  	var color2 = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA0000 );
+		  	var colorG = new THREE.Color( 0x00AA00 );
+		  	var colorB = new THREE.Color( 0x0000AA );
+			var colorRd = new THREE.Color( 0xAA6666 );
+		  	var colorGd = new THREE.Color( 0x66AA66 );
+		  	var colorBd = new THREE.Color( 0x6666AA );
+            var colorB = new THREE.Color( 0x333366 );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
+			
+            
+		  
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper1 = new THREE.AxesHelper( size/10 );
+			var axesHelper2 = new THREE.AxesHelper( size/10 );
+			var axesHelper3 = new THREE.AxesHelper( size/10 );
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+                gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+                gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+                gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+            
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+                var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+                var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+                var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+			
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+			// GEOMETRIAS PLANETARIAS
+			
+			
+			
+			geometry_sol =  new THREE.SphereGeometry( 4, 32, 32 )
+                for ( var i = 0; i < geometry_sol.faces.length; i++) { 
+                    if( geometry_sol.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_sol.faces[i].color = 0x0000AA; 
+                    } 
+                }
+				
+				
+				
+			geometry_mercurio = new THREE.SphereGeometry( 0.5, 32, 32 )
+                for ( var i = 0; i < geometry_mercurio.faces.length; i++) { 
+                    if( geometry_mercurio.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_mercurio.faces[i].color = 0x0000AA; 
+                    } 
+                }
+            
+			geometry_venus = new THREE.SphereGeometry( 0.7, 32, 32 )
+                for ( var i = 0; i < geometry_mercurio.faces.length; i++) { 
+                    if( geometry_mercurio.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_mercurio.faces[i].color = 0x0000AA; 
+                    } 
+                }
+				
+			geometry_tierra = new THREE.SphereGeometry( 1, 32, 32 )
+                for ( var i = 0; i < geometry_mercurio.faces.length; i++) { 
+                    if( geometry_mercurio.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_mercurio.faces[i].color = 0x0000AA; 
+                    } 
+                }
+				
+			geometry_luna = new THREE.SphereGeometry( 0.2, 32, 32 )
+                for ( var i = 0; i < geometry_mercurio.faces.length; i++) { 
+                    if( geometry_mercurio.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_mercurio.faces[i].color = 0x0000AA; 
+                    } 
+                }	
+				
+			geometry_marte = new THREE.SphereGeometry( 1.3, 32, 32 )
+                for ( var i = 0; i < geometry_mercurio.faces.length; i++) { 
+                    if( geometry_mercurio.faces[i].normal.y !=  0x0000AA) { 
+                        geometry_mercurio.faces[i].color = 0x0000AA; 
+                    } 
+                }	
+           //AGREGAR A ESCENA 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                 
+            
+			//SOL
+
+			var material_sol = new THREE.MeshBasicMaterial( {color: 0xFFF333} );
+			 
+            
+           
+			sol = new THREE.Mesh (geometry_sol, material_sol);
+			sol.applyMatrix( new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(0)));
+			sol.applyMatrix( new THREE.Matrix4().makeTranslation(-10,-5,10) )
+			
+			scene.add (sol);
+			
+			
+			//MERCURIO 
+			
+			var material_mercurio = new THREE.MeshBasicMaterial( {color: 0xF49D04} );
+			 
+         
+			mercurio = new THREE.Mesh (geometry_mercurio, material_mercurio);
+			mercurio.applyMatrix( new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(0)));
+			mercurio.applyMatrix( new THREE.Matrix4().makeTranslation(-6,-5,-10) )
+			
+			sol.add (mercurio);
+			
+	
+			
+			//VENUS
+			
+		
+			var material_venus = new THREE.MeshBasicMaterial( {color: 0xF47104} );
+			 
+       
+			venus = new THREE.Mesh (geometry_venus, material_venus);
+			venus.applyMatrix( new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(0)));
+			venus.applyMatrix( new THREE.Matrix4().makeTranslation(-6,-5,-15) )
+			
+			sol.add (venus);
+	
+			
+			
+			
+			//TIERRA
+			
+	
+			var material_tierra = new THREE.MeshBasicMaterial( {color: 0x16BDE3} );
+		
+			tierra = new THREE.Mesh (geometry_tierra, material_tierra);
+			tierra.applyMatrix( new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(0)));
+			tierra.applyMatrix( new THREE.Matrix4().makeTranslation(-6,-5,-20) )
+			
+			sol.add (tierra);
+			
+		
+			var material_l = new THREE.MeshBasicMaterial( {color: 0xFFFFFF} );
+			luna = new THREE.Mesh (geometry_luna, material_l);
+			luna.applyMatrix( new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(0)));
+			luna.applyMatrix( new THREE.Matrix4().makeTranslation(-1,1,-1) )
+			tierra.add (luna);
+			
+		
+			
+			
+            //UNA HEREDA LA OTRA xx.add (new object); --> new.object(2_object);
+   
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////         
+           //AGREGAR A LA ESCENA
+           // scene.add( gridHelperXZ );
+            scene.add( arrowX );	
+            scene.add( arrowY );	
+            scene.add( arrowZ );	
+               
+           //MOVER LA CAMARA
+			camera.position.x = 60;
+			camera.position.y = 60;	 
+		  	camera.position.z = 60;			
+		  	camera.lookAt( origin );
+			
+			renderer.render( scene, camera );
+			}
+    
+    function animate() {
+        render();
+        requestAnimationFrame( animate );
+    }
+    
+    function render(){
+        var dtime = Date.now()-startTime;
+		var tx=0, ty=0, tz=0;	//Variables para traslacion
+		var sc = 1;				//Variable para escala
+		var theta=0;			//Variable para ángulo de rotacion de piernas
+		var sigma=0;			//Variable para ángulo de rotación de caderas
+		var sigma2=0;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+		
+		/*		if(thetaSum>90*Math.PI/180) {positivo = false;}
+		if(thetaSum<=-20*Math.PI/180) {positivo = true;}
+        
+        if(thetaSum>-150*Math.PI/180) {posi_1 = false;}
+		if(thetaSum<=90*Math.PI/180) {posi_1 = true;}
+		
+        if(arriba){ if(positivo)	theta = .1;
+			    else theta = -.1;            }
+        if(abajo){ if(posi_1)	theta = -.1;
+			     else theta = .1;            }
+        
+        thetaSum+=theta;
+*/
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       	
+		//MATRIZ DE TRASLACIÓN
+		var t = new THREE.Matrix4();
+		t.set( 	1, 0, 0, tx,
+				0, 1, 0, ty, 
+				0, 0, 1, tz,
+				0, 0, 0, 1	);
+		
+
+		
+		//ROTACIONES
+		var ct1 = Math.cos(theta);
+		var ct2 = Math.cos(-theta);
+        
+		var cs = Math.cos(sigma);
+        var ss = Math.sin(sigma);
+      
+        
+		var st1 = Math.sin(theta);
+		var st2 = Math.sin(-theta);
+        
+        var cso = Math.cos(sigma2);
+        var sso = Math.sin(sigma2);
+        
+		
+		var r = new THREE.Matrix4();
+		var r1 = new THREE.Matrix4();
+		var r2 = new THREE.Matrix4();
+        var r3 = new THREE.Matrix4();
+        
+        
+        
+        
+
+		//MATRIZ DE ROTACIÓN EN EJE Y
+		r.set( 	   cs,  0, ss, 0,
+					0,  1,  0, 0, 
+				  -ss,  0, cs, 0,
+					0,  0,  0, 1 );	
+       
+		//MATRICES DE ROTACIÓN EN EJE LOCAL DE PIERNAS	
+		r1.set( 	1,  0,  0, 0,
+					0, ct1,-st1, 0, 
+					0, st1, ct1, 0,
+					0,  0,  0, 1 );	
+		r2.set( 	1,  0,  0, 0,
+					0, ct2,-st2, 0, 
+					0, st2, ct2, 0,
+					0,  0,  0, 1 );		
+       
+		 r3.set(     cso, 0, sso, 0,
+                    0, 1, 0, 0, 
+                    -sso, 0, cso, 0,
+                    0, 0, 0, 1 );
+        
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+		//ROTACION EN UN EJE PARALELO
+	    var tempMatrix = new THREE.Matrix4();
+		
+        mercurio.applyMatrix ( new THREE.Matrix4().makeRotationY(5*Math.PI/500));
+		venus.applyMatrix ( new THREE.Matrix4().makeRotationY(5*Math.PI/400));
+		tierra.applyMatrix ( new THREE.Matrix4().makeRotationY(5*Math.PI/300));
+		luna.applyMatrix ( new THREE.Matrix4().makeRotationY(5*Math.PI/250));
+        
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+   
+
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+    }
+    </script>
+  </body>
+</html>
