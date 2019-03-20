@@ -59,18 +59,18 @@
 			var colorp7 = new THREE.Color( 0xFFCC99 );
 		  	var colorp8 = new THREE.Color( 0x9999FF );
 		  
-		  	/*CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
 		  	var axesHelper1 = new THREE.AxesHelper( size/10 );
 			var axesHelper2 = new THREE.AxesHelper( size/10 );
 			var axesHelper3 = new THREE.AxesHelper( size/10 );
 		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
 		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
-		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );*/
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
             
-            /*ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
             gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
             gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
-            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );*/
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
             
             //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
             var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
@@ -199,7 +199,7 @@
 			
 		  	//AGREGAR A LA ESCENA
 			
-            /*scene.add( gridHelperXZ );*/
+                        scene.add( gridHelperXZ );
 		  	scene.add( arrowX );	
 		  	scene.add( arrowY );	
 		  	scene.add( arrowZ );	
