@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Plantilla Base</title>
+<style>
+html, body { margin: 0; padding: 0; overflow: hidden; }
+</style>
+</head>
+<body>
+<script src="js/three.js"></script>
+<script>
+var scene = new THREE.Scene();
+var aspect = window.innerWidth / window.innerHeight;
+var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+ 
+
+ 
+//PLANO xz
+
+//AXESHELPER
+var axesHelper = new THREE.AxesHelper( 5 );
+scene.add( axesHelper );
+
+//PLane helper
+var plane = new THREE.Plane( new THREE.Vector3( 1,0 , 0), 2);
+var helper = new THREE.PlaneHelper( plane, 3, 0xffff00 );
+scene.add( helper );
+var plane = new THREE.Plane( new THREE.Vector3( 0,0 , 2), 2);
+var helper1 = new THREE.PlaneHelper( plane, 3, 0xffff00 );
+scene.add( helper1 );
+//GRILLA
+var size = 10;
+var divisions = 10;
+
+var gridHelper = new THREE.GridHelper( size, divisions );
+scene.add( gridHelper );
+
+
+
+//PLANO xz
+var x3= new THREE.Vector3( 1, 0, 0 );
+var y3=new THREE.Vector3(0,0,0);
+var z3=new THREE.Vector3(0,0,2);
+
+//normalize the direction vector (convert to vector of length 1)
+x3.normalize();
+y3.normalize();
+z3.normalize();
+
+var origin = new THREE.Vector3( 0, 0, 0 );
+var length = 1;
+var hex = 0xff0000;
+
+var arrowHelper = new THREE.ArrowHelper( x3, origin, length, hex );
+var arrowHelperX=new THREE.ArrowHelper(y3,origin,length,hex);
+var arrowHelperXZ=new THREE.ArrowHelper(z3,origin,length,hex);
+scene.add( arrowHelper );
+scene.add(arrowHelperX);
+scene.add(arrowHelperXZ);
+
+camera.position.z=5;
+camera.position.x=5;
+camera.position.y=5;
+
+camera.lookAt(origin);
+renderer.render(scene,camera);
+</script>
+</body>
+</html>
